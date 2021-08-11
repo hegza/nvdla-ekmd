@@ -26,6 +26,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <stdint.h>
+
 #include <opendla.h>
 #include <dla_debug.h>
 #include <dla_err.h>
@@ -138,7 +140,7 @@ dla_pdp_set_producer(int32_t group_id, int32_t rdma_group_id)
 	dla_trace("Exit: %s", __func__);
 }
 
-int
+int32_t
 dla_pdp_enable(struct dla_processor_group *group)
 {
 	int32_t ret = 0;
@@ -188,7 +190,7 @@ dla_pdp_rdma_check(struct dla_processor_group *group)
 		group->is_rdma_needed = 1;
 }
 
-static int
+static int32_t
 validate_strides(uint8_t stride_x, uint8_t stride_y)
 {
 	int32_t ret = 0;
@@ -201,7 +203,7 @@ validate_strides(uint8_t stride_x, uint8_t stride_y)
 	RETURN(ret);
 }
 
-static int
+static int32_t
 vaildate_pdp_configs(struct dla_processor_group *group)
 {
 	int32_t ret = 0;
@@ -261,7 +263,7 @@ exit:
 	RETURN(ret);
 }
 
-static int
+static int32_t
 processor_pdp_program(struct dla_processor_group *group)
 {
 	int32_t ret = 0;
@@ -481,7 +483,7 @@ exit:
 	RETURN(ret);
 }
 
-int
+int32_t
 dla_pdp_is_ready(struct dla_processor *processor,
 			   struct dla_processor_group *group)
 {
@@ -501,7 +503,7 @@ dla_pdp_dump_config(struct dla_processor_group *group)
 	dla_debug_pdp_op_desc(pdp_op, group->roi_index);
 }
 
-int
+int32_t
 dla_pdp_program(struct dla_processor_group *group)
 {
 	int32_t ret;

@@ -26,6 +26,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <stdint.h>
+
 #include <dla_debug.h>
 #include <dla_interface.h>
 #include <dla_sched.h>
@@ -119,7 +121,7 @@ dla_debug_op_desc(struct dla_common_op_desc *desc, int32_t roi)
 	dla_debug("NVDLA FW ROI[%d]: dla_common_op_desc\n", roi);
 	dla_debug("---------------------------------------------------------\n");
 	dla_debug("[%p] Operation index %d ROI %d dep_count %d type %d\n",
-			(unsigned int *)desc, desc->index, desc->roi_index,
+			(uint32_t *)desc, desc->index, desc->roi_index,
 			desc->dependency_count, desc->op_type);
 	dla_debug("consumers = [ dla_consumer =>\n");
 	for (i = 0; i < DLA_OP_NUM; i++)

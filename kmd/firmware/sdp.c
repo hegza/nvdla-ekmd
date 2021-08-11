@@ -26,6 +26,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <stdint.h>
+
 #include <opendla.h>
 #include <dla_debug.h>
 #include <dla_interface.h>
@@ -189,7 +191,7 @@ dla_sdp_set_producer(int32_t group_id, int32_t rdma_group_id)
 	sdp_rdma_reg_write(S_POINTER, reg);
 }
 
-int
+int32_t
 dla_sdp_enable(struct dla_processor_group *group)
 {
 	uint32_t reg;
@@ -730,7 +732,7 @@ exit:
 	RETURN(ret);
 }
 
-int
+int32_t
 dla_sdp_is_ready(struct dla_processor *processor,
 			   struct dla_processor_group *group)
 {
@@ -798,7 +800,7 @@ dla_sdp_dump_config(struct dla_processor_group *group)
 	dla_debug_sdp_op_desc(sdp_op, group->roi_index);
 }
 
-int
+int32_t
 dla_sdp_program(struct dla_processor_group *group)
 {
 	int32_t ret;

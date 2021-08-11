@@ -29,7 +29,12 @@
 #ifndef __NVDLA_INTERFACE_H_
 #define __NVDLA_INTERFACE_H_
 
+#include <stdint.h>
+#include <stddef.h>
+#include <stdbool.h>
 
+#define __aligned(x) __attribute__ ((aligned (x)))
+#define __packed __attribute__((packed))
 
 /**
  * @brief			Register driver to firmware
@@ -306,7 +311,7 @@ void dla_error(const char *str, ...);
  * @return			Memory area address
  *
  */
-void *dla_memset(void *src, int ch, uint64_t len);
+void *dla_memset(void *src, int32_t ch, uint64_t len);
 
 /**
  * @brief			Copy memory

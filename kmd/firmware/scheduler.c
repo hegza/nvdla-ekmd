@@ -26,6 +26,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <stdint.h>
+
 #include <opendla.h>
 #include <dla_debug.h>
 #include <dla_engine.h>
@@ -40,7 +42,7 @@
 static uint64_t roi_array_length __aligned(8);
 static struct dla_network_desc network;
 
-static int
+static int32_t
 dla_update_consumers(struct dla_processor_group *group,
 			struct dla_common_op_desc *op, uint8_t event);
 
@@ -73,7 +75,7 @@ exit:
 	RETURN(ret);
 }
 
-static int
+static int32_t
 dla_op_enabled(struct dla_processor_group *group)
 {
 	int32_t ret;
@@ -91,7 +93,7 @@ dla_op_enabled(struct dla_processor_group *group)
 	RETURN(ret);
 }
 
-static int
+static int32_t
 dla_op_programmed(struct dla_processor *processor,
 		  struct dla_processor_group *group,
 		  uint8_t rdma_id)
@@ -192,7 +194,7 @@ dla_reset_group(struct dla_processor_group *group)
 	group->op_desc = NULL;
 }
 
-static int
+static int32_t
 dla_prepare_operation(struct dla_processor *processor,
 			struct dla_common_op_desc *op_desc,
 			uint8_t roi_index, uint32_t *group_number)
@@ -250,7 +252,7 @@ exit:
 	RETURN(ret);
 }
 
-static int
+static int32_t
 dla_program_operation(struct dla_processor *processor,
 			struct dla_processor_group *group)
 {
@@ -315,7 +317,7 @@ exit:
 	RETURN(ret);
 }
 
-static int
+static int32_t
 dla_enable_operation(struct dla_processor *processor,
 			struct dla_common_op_desc *op_desc)
 {
@@ -396,7 +398,7 @@ exit:
 	RETURN(ret);
 }
 
-static int
+static int32_t
 dla_submit_operation(struct dla_processor *processor,
 			struct dla_common_op_desc *op_desc,
 			uint8_t roi_index)
@@ -490,7 +492,7 @@ exit:
 	RETURN(ret);
 }
 
-static int
+static int32_t
 dla_update_dependency(struct dla_consumer *consumer,
 			struct dla_common_op_desc *op_desc,
 			uint8_t event, uint8_t roi_index)
@@ -537,7 +539,7 @@ exit:
 	RETURN(ret);
 }
 
-static int
+static int32_t
 dla_update_consumers(struct dla_processor_group *group,
 		     struct dla_common_op_desc *op,
 		     uint8_t event)
@@ -578,7 +580,7 @@ exit:
 /**
  * Handle operation completion notification
  */
-int
+int32_t
 dla_op_completion(struct dla_processor *processor,
 		  struct dla_processor_group *group)
 {
@@ -728,7 +730,7 @@ exit:
  * @engine: Engine instance
  * @return: 0 for success
  */
-static int
+static int32_t
 dla_read_network_config(struct dla_engine *engine)
 {
 	int32_t ret;
@@ -899,7 +901,7 @@ exit:
 	RETURN(ret);
 }
 
-static int
+static int32_t
 dla_initiate_processors(struct dla_engine *engine)
 {
 	int32_t i;
@@ -969,7 +971,7 @@ exit:
 	RETURN(ret);
 }
 
-static int
+static int32_t
 dla_handle_events(struct dla_processor *processor)
 {
 	int32_t j;
@@ -1029,7 +1031,7 @@ exit:
 	RETURN(ret);
 }
 
-int
+int32_t
 dla_process_events(void *engine_context, uint32_t *task_complete)
 {
 	int32_t i;
@@ -1063,7 +1065,7 @@ dla_process_events(void *engine_context, uint32_t *task_complete)
  * 2. Initiate processors with head of list for same op
  * 3. Start processing events received
  */
-int
+int32_t
 dla_execute_task(void *engine_context, void *task_data, void *config_data)
 {
 	int32_t ret;

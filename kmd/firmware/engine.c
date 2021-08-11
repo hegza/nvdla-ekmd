@@ -26,6 +26,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <stdint.h>
+
 #include <opendla.h>
 #include <dla_debug.h>
 #include <dla_err.h>
@@ -120,7 +122,7 @@ exit:
  * For all other layers, this address is read from address list
  * using index specified in data cube
  */
-int
+int32_t
 dla_read_input_address(struct dla_data_cube *data,
 		       uint64_t *address,
 		       int16_t op_index,
@@ -192,7 +194,7 @@ exit:
 	RETURN(ret);
 }
 
-int
+int32_t
 utils_get_free_group(struct dla_processor *processor,
 		     uint8_t *group_id,
 		     uint8_t *rdma_id)
