@@ -1029,7 +1029,7 @@ exit:
 	RETURN(ret);
 }
 
-int
+int32_t
 dla_process_events(void *engine_context, uint32_t *task_complete)
 {
 	int32_t i;
@@ -1063,7 +1063,7 @@ dla_process_events(void *engine_context, uint32_t *task_complete)
  * 2. Initiate processors with head of list for same op
  * 3. Start processing events received
  */
-int
+int32_t
 dla_execute_task(void *engine_context, void *task_data, void *config_data)
 {
 	int32_t ret;
