@@ -102,14 +102,14 @@ dla_debug_address_info(struct dla_task *tk)
 	dla_debug("*********************************************************\n");
 	dla_debug("NVDLA FW address list\n");
 	dla_debug("---------------------------------------------------------\n");
-	dla_debug("task base address        = %llu\n", tk->base);
-	dla_debug("op desc address          = %llu\n", tk->operation_desc_addr);
-	dla_debug("surface desc address     = %llu\n", tk->surface_desc_addr);
-	dla_debug("dependency graph address = %llu\n", tk->dependency_graph_addr);
-	dla_debug("LUT data address         = %llu\n", tk->lut_data_addr);
-	dla_debug("stat address             = %llu\n", tk->stat_data_addr);
-	dla_debug("ROI array address        = %llu\n", tk->roi_array_addr);
-	dla_debug("surface address          = %llu\n", tk->surface_addr);
+	dla_debug("task base address        = %llX\n", tk->base);
+	dla_debug("op desc address          = %llX\n", tk->operation_desc_addr);
+	dla_debug("surface desc address     = %llX\n", tk->surface_desc_addr);
+	dla_debug("dependency graph address = %llX\n", tk->dependency_graph_addr);
+	dla_debug("LUT data address         = %llX\n", tk->lut_data_addr);
+	dla_debug("stat address             = %llX\n", tk->stat_data_addr);
+	dla_debug("ROI array address        = %llX\n", tk->roi_array_addr);
+	dla_debug("surface address          = %llX\n", tk->surface_addr);
 }
 
 void
