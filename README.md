@@ -1,3 +1,7 @@
+# ballast-experimental branch
+This branch is configured to compile against the Ballast SoC system of Tampere University, and
+against the MPC/Pulpissimo processor specifically.
+
 # Embedded port of NVDLA KMD firmware
 This is a Linux-free port of NVDLA firmware at https://github.com/nvdla/sw for bare metal applications. This is a work-in-progress, and may not do what you want it to do.
 
