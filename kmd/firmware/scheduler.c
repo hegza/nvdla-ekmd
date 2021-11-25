@@ -950,7 +950,7 @@ dla_initiate_processors(struct dla_engine *engine)
 			goto exit;
 		}
 
-		processor = &engine->processors[consumer->op_type];
+		processor = &engine->processors[i];
 
 		ret = dla_submit_operation(processor, consumer, 0);
 		dla_put_op_desc(consumer);
