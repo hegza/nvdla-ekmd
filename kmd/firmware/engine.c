@@ -42,26 +42,36 @@ static const uint32_t map_rdma_ptr_addr[] = {
 	0xFFFFFFFF,
 	SDP_REG(RDMA_S_POINTER),
 	PDP_REG(RDMA_S_POINTER),
+	#if ENABLE_ALL_ENGINES
 	CDP_REG(RDMA_S_POINTER),
+	#endif
 	0xFFFFFFFF,
 };
 
 static const uint32_t map_sts_addr[] = {
+#if ENABLE_ALL_ENGINES
 	BDMA_REG(STATUS),
+#endif
 	CACC_REG(S_STATUS),
 	SDP_REG(S_STATUS),
 	PDP_REG(S_STATUS),
+#if ENABLE_ALL_ENGINES
 	CDP_REG(S_STATUS),
 	RBK_REG(S_STATUS),
+#endif
 };
 
 static const uint32_t map_ptr_addr[] = {
+#if ENABLE_ALL_ENGINES
 	BDMA_REG(STATUS),
+#endif
 	CACC_REG(S_POINTER),
 	SDP_REG(S_POINTER),
 	PDP_REG(S_POINTER),
+#if ENABLE_ALL_ENGINES
 	CDP_REG(S_POINTER),
 	RBK_REG(S_POINTER),
+#endif
 };
 
 int32_t dla_enable_intr(uint32_t mask)
@@ -206,7 +216,7 @@ utils_get_free_group(struct dla_processor *processor,
 	uint32_t hw_rdma_ptr;
 
 	hw_rdma_ptr = 0;
-
+	#if ENABLE_ALL_ENGINES
 	if (processor->op_type == DLA_OP_BDMA) {
 		pointer = reg_read(map_ptr_addr[processor->op_type]);
 		hw_consumer_ptr = ((pointer & MASK(BDMA_STATUS_0, GRP0_BUSY)) >>
@@ -230,7 +240,7 @@ utils_get_free_group(struct dla_processor *processor,
 					SHIFT(CDP_S_POINTER_0, CONSUMER);
 		}
 	}
-
+	#endif
 	/**
 	 * If both processors are programmed then exit
 	 */

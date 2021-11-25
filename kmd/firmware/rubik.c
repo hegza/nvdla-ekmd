@@ -38,6 +38,7 @@
 #include "dla_engine_internal.h"
 #include "engine_debug.h"
 
+#if ENABLE_ALL_ENGINES
 static uint8_t map_rubik_mode[] = {
 	FIELD_ENUM(RBK_D_MISC_CFG_0, RUBIK_MODE, CONTRACT),
 	FIELD_ENUM(RBK_D_MISC_CFG_0, RUBIK_MODE, SPLIT),
@@ -289,3 +290,5 @@ exit:
 	dla_trace("Exit: %s", __func__);
 	RETURN(ret);
 }
+
+#endif // ENABLE_ALL_ENGINES

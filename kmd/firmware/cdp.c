@@ -38,6 +38,7 @@
 #include "dla_engine_internal.h"
 #include "engine_debug.h"
 
+#if ENABLE_ALL_ENGINES
 static const uint8_t map_ram[] = {
 	FIELD_ENUM(CDP_RDMA_D_SRC_DMA_CFG_0, SRC_RAM_TYPE, MC),
 	FIELD_ENUM(CDP_RDMA_D_SRC_DMA_CFG_0, SRC_RAM_TYPE, CV),
@@ -381,3 +382,5 @@ exit:
 	dla_debug("Exit: %s", __func__);
 	RETURN(ret);
 }
+
+#endif // ENABLE_ALL_ENGINES

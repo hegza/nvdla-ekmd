@@ -86,12 +86,14 @@ static inline void
 dla_debug_network_desc(struct dla_network_desc *network_desc) {}
 static inline void
 dla_debug_address_info(struct dla_task *task) {}
+#if ENABLE_ALL_ENGINES
 static inline void
 dla_debug_bdma_surface_desc(struct dla_bdma_surface_desc *desc, int32_t roi) {}
 static inline void
 dla_debug_bdma_op_desc(struct dla_bdma_op_desc *desc, int32_t roi) {}
 static inline void
 dla_debug_bdma_stats(struct dla_bdma_stat_desc *stat) {}
+#endif
 static inline void
 dla_debug_conv_surface_desc(struct dla_conv_surface_desc *desc, int32_t roi) {}
 static inline void
@@ -110,6 +112,7 @@ static inline void
 dla_debug_pdp_op_desc(struct dla_pdp_op_desc *desc, int32_t roi) {}
 static inline void
 dla_debug_pdp_stats(struct dla_pdp_stat_desc *stat) {}
+#if ENABLE_ALL_ENGINES
 static inline void
 dla_debug_cdp_surface_desc(struct dla_cdp_surface_desc *desc, int32_t roi) {}
 static inline void
@@ -122,6 +125,7 @@ static inline void
 dla_debug_rubik_surface_desc(struct dla_rubik_surface_desc *desc, int32_t roi) {}
 static inline void
 dla_debug_rubik_stats(struct dla_rubik_stat_desc *stat) {}
+#endif
 static inline void
 dla_debug_lut_params(struct dla_lut_param *lut_param) {}
 

@@ -65,6 +65,7 @@ int32_t dla_isr_handler(void *engine_data)
 		group = &processor->groups[1];
 		group->events |= (1 << DLA_EVENT_OP_COMPLETED);
 	}
+	#if ENABLE_ALL_ENGINES
 	if (reg & MASK(GLB_S_INTR_STATUS_0, CDP_DONE_STATUS0)) {
 		processor = &engine->processors[DLA_OP_CDP];
 		group = &processor->groups[0];
@@ -85,6 +86,7 @@ int32_t dla_isr_handler(void *engine_data)
 		group = &processor->groups[1];
 		group->events |= (1 << DLA_EVENT_OP_COMPLETED);
 	}
+	#endif
 	if (reg & MASK(GLB_S_INTR_STATUS_0, PDP_DONE_STATUS0)) {
 		processor = &engine->processors[DLA_OP_PDP];
 		group = &processor->groups[0];
@@ -95,6 +97,7 @@ int32_t dla_isr_handler(void *engine_data)
 		group = &processor->groups[1];
 		group->events |= (1 << DLA_EVENT_OP_COMPLETED);
 	}
+	#if ENABLE_ALL_ENGINES
 	if (reg & MASK(GLB_S_INTR_STATUS_0, BDMA_DONE_STATUS0)) {
 		processor = &engine->processors[DLA_OP_BDMA];
 		group = &processor->groups[0];
@@ -105,6 +108,7 @@ int32_t dla_isr_handler(void *engine_data)
 		group = &processor->groups[1];
 		group->events |= (1 << DLA_EVENT_OP_COMPLETED);
 	}
+	#endif
 	if (reg & MASK(GLB_S_INTR_STATUS_0, CDMA_DAT_DONE_STATUS0)) {
 		processor = &engine->processors[DLA_OP_CONV];
 		group = &processor->groups[0];

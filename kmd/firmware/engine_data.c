@@ -38,6 +38,7 @@ static union dla_surface_container surface_desc[DLA_OP_NUM][DLA_NUM_GROUPS];
 static struct dla_task global_task;
 
 static struct dla_engine engine = {
+	#if ENABLE_ALL_ENGINES
 	.processors[DLA_OP_BDMA] = {
 		.name = "BDMA",
 		.op_type = DLA_OP_BDMA,
@@ -77,6 +78,7 @@ static struct dla_engine engine = {
 			.surface_desc = &surface_desc[DLA_OP_BDMA][1],
 		},
 	},
+	#endif // ENABLE_ALL_ENGINES
 	.processors[DLA_OP_CONV] = {
 		.name = "Convolution",
 		.op_type = DLA_OP_CONV,
@@ -194,6 +196,7 @@ static struct dla_engine engine = {
 			.surface_desc = &surface_desc[DLA_OP_PDP][1],
 		},
 	},
+	#if ENABLE_ALL_ENGINES
 	.processors[DLA_OP_CDP] = {
 		.name = "CDP",
 		.op_type = DLA_OP_CDP,
@@ -273,6 +276,7 @@ static struct dla_engine engine = {
 			.surface_desc = &surface_desc[DLA_OP_RUBIK][1],
 		},
 	},
+	#endif // ENABLE_ALL_ENGINES
 
 };
 

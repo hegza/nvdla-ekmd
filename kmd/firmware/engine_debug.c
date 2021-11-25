@@ -56,7 +56,7 @@ dla_debug_network_desc(struct dla_network_desc *nd)
 	dla_debug("input layer        = %u\n", nd->input_layer);
 	dla_debug("dynamic roi        = %u\n", nd->dynamic_roi);
 }
-
+#if ENABLE_ALL_ENGINES
 static void
 dla_debug_bdma_transfer(struct dla_bdma_transfer_desc *tr, int32_t id)
 {
@@ -95,7 +95,7 @@ dla_debug_bdma_op_desc(struct dla_bdma_op_desc *desc, int32_t roi)
 	dla_debug("---------------------------------------------------------\n");
 	dla_debug("num_transfers    = %u\n", desc->num_transfers);
 }
-
+#endif // ENABLE_ALL_ENGINES
 void
 dla_debug_address_info(struct dla_task *tk)
 {
@@ -226,7 +226,7 @@ dla_debug_lut_params(struct dla_lut_param *lut_param)
 	dla_debug("method                      = %u\n",
 				lut_param->method);
 }
-
+#if ENABLE_ALL_ENGINES
 void
 dla_debug_bdma_stats(struct dla_bdma_stat_desc *stat)
 {
@@ -237,7 +237,7 @@ dla_debug_bdma_stats(struct dla_bdma_stat_desc *stat)
 	dla_debug("write_stall  = %u\n", stat->write_stall);
 	dla_debug("runtime      = %u\n", stat->runtime);
 }
-
+#endif
 void
 dla_debug_conv_surface_desc(struct dla_conv_surface_desc *desc, int32_t roi)
 {
@@ -387,7 +387,7 @@ dla_debug_pdp_stats(struct dla_pdp_stat_desc *stat)
 	dla_debug("write_stall     = %u\n", stat->write_stall);
 	dla_debug("runtime         = %u\n", stat->runtime);
 }
-
+#if ENABLE_ALL_ENGINES
 void
 dla_debug_cdp_surface_desc(struct dla_cdp_surface_desc *desc, int32_t roi)
 {
@@ -471,7 +471,7 @@ dla_debug_rubik_stats(struct dla_rubik_stat_desc *stat)
 	dla_debug("write_stall  = %u\n", stat->write_stall);
 	dla_debug("runtime      = %u\n", stat->runtime);
 }
-
+#endif // ENABLE_ALL_ENGINES
 static void
 dla_debug_sdp_op(struct dla_sdp_op *sdp_op)
 {

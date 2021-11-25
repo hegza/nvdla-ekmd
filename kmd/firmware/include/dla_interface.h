@@ -41,12 +41,18 @@
  * graph of these operations
  * @{
  */
+#if ENABLE_ALL_ENGINES
 #define DLA_OP_BDMA		0
 #define DLA_OP_CONV		1
 #define DLA_OP_SDP		2
 #define DLA_OP_PDP		3
 #define DLA_OP_CDP		4
 #define DLA_OP_RUBIK		5
+#else
+#define DLA_OP_CONV		0
+#define DLA_OP_SDP		1
+#define DLA_OP_PDP		2
+#endif //ENABLE_ALL_ENGINES
 /** @} */
 
 /**
@@ -55,7 +61,11 @@
  * @brief DLA ash 6 processors
  * @{
  */
+#if ENABLE_ALL_ENGINES
 #define DLA_OP_NUM		6
+#else
+#define DLA_OP_NUM		3
+#endif //ENABLE_ALL_ENGINES
 /** @} */
 
 /**
@@ -160,6 +170,7 @@ struct dla_roi_desc {
 	uint32_t bottom;
 } __packed __aligned(4);
 
+#if ENABLE_ALL_ENGINES
 /**
  * @ingroup BDMA
  * @name Maximum BDMA transfers
@@ -207,6 +218,7 @@ struct dla_bdma_stat_desc {
 	uint32_t write_stall;
 	uint32_t runtime;
 } __packed __aligned(4);
+#endif /// ENABLE_ALL_ENGINES
 
 /**
  * @ingroup Convolution
@@ -773,6 +785,7 @@ struct dla_pdp_stat_desc {
 	uint32_t runtime;
 } __packed __aligned(4);
 
+#if ENABLE_ALL_ENGINES
 struct dla_cdp_surface_desc {
 	/* Data cube */
 	struct dla_data_cube src_data;
@@ -839,32 +852,45 @@ struct dla_rubik_stat_desc {
 	uint32_t write_stall;
 	uint32_t runtime;
 } __packed __aligned(4);
+#endif // ENABLE_ALL_ENGINES
 
 union dla_surface_container {
+#if ENABLE_ALL_ENGINES
 	struct dla_bdma_surface_desc bdma_surface;
+#endif
 	struct dla_conv_surface_desc conv_surface;
 	struct dla_sdp_surface_desc sdp_surface;
 	struct dla_pdp_surface_desc pdp_surface;
+#if ENABLE_ALL_ENGINES
 	struct dla_cdp_surface_desc cdp_surface;
 	struct dla_rubik_surface_desc rubik_surface;
+#endif
 };
 
 union dla_operation_container {
+#if ENABLE_ALL_ENGINES
 	struct dla_bdma_op_desc bdma_op;
+#endif
 	struct dla_conv_op_desc conv_op;
 	struct dla_sdp_op_desc sdp_op;
 	struct dla_pdp_op_desc pdp_op;
+#if ENABLE_ALL_ENGINES
 	struct dla_cdp_op_desc cdp_op;
 	struct dla_rubik_op_desc rubik_op;
+#endif
 };
 
 union dla_stat_container {
+#if ENABLE_ALL_ENGINES
 	struct dla_bdma_stat_desc bdma_stat;
+#endif
 	struct dla_conv_stat_desc conv_stat;
 	struct dla_sdp_stat_desc sdp_stat;
 	struct dla_pdp_stat_desc pdp_stat;
+#if ENABLE_ALL_ENGINES
 	struct dla_cdp_stat_desc cdp_stat;
 	struct dla_rubik_stat_desc rubik_stat;
+#endif
 };
 
 /**

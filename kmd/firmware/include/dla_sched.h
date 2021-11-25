@@ -67,8 +67,10 @@ struct dla_task {
  */
 struct dla_config {
 	uint32_t atom_size;
+#if ENABLE_ALL_ENGINES
 	bool bdma_enable;
 	bool rubik_enable;
+#endif
 	bool weight_compress_support;
 };
 
