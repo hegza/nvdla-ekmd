@@ -63,7 +63,7 @@
 /**
  * Used to enable/disable reading stat registers
  */
-#define STAT_ENABLE		1
+#define STAT_ENABLE		0
 
 /**
  * Used to print debug network data
