@@ -29,6 +29,8 @@
 #ifndef __FIRMWARE_DLA_INTERFACE_H_
 #define __FIRMWARE_DLA_INTERFACE_H_
 
+#include <stddef.h>
+
 #include <nvdla_interface.h>
 
 /**
@@ -581,10 +583,10 @@ struct dla_lut_param {
 	 * The start and end point of raw table,
 	 * valid when raw_method=LINEAR only
 	 */
-	uint64_t linear_exp_start;
-	uint64_t linear_exp_end;
-	uint64_t linear_only_start;
-	uint64_t linear_only_end;
+	size_t linear_exp_start;
+	size_t linear_exp_end;
+	size_t linear_only_start;
+	size_t linear_only_end;
 
 	union dla_slope linear_exp_underflow_slope;
 	union dla_slope linear_exp_overflow_slope;

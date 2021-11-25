@@ -27,6 +27,7 @@
  */
 
 #include <stdint.h>
+#include <stddef.h>
 
 #include <opendla.h>
 #include <dla_debug.h>
@@ -86,7 +87,7 @@ void
 dla_pdp_stat_data(struct dla_processor *processor,
 					struct dla_processor_group *group)
 {
-	uint64_t end_time = 0;
+	size_t end_time = 0;
 	struct dla_pdp_stat_desc *pdp_stat;
 
 	pdp_stat = &processor->stat_data_desc->pdp_stat;
@@ -267,9 +268,9 @@ static int32_t
 processor_pdp_program(struct dla_processor_group *group)
 {
 	int32_t ret = 0;
-	uint32_t reg, high, low;
-	uint64_t input_address = 0;
-	uint64_t output_address = 0;
+	uint32_t reg, low;
+	size_t input_address = 0;
+	size_t output_address = 0;
 	struct dla_engine *engine = dla_get_engine();
 	struct dla_pdp_op_desc *pdp_op;
 	struct dla_pdp_surface_desc *pdp_surface;
@@ -308,9 +309,7 @@ processor_pdp_program(struct dla_processor_group *group)
 		pdp_rdma_reg_write(D_DATA_CUBE_IN_CHANNEL,
 				pdp_surface->src_data.channel - 1);
 
-		high = HIGH32BITS(input_address);
-		low  = LOW32BITS(input_address);
-		pdp_rdma_reg_write(D_SRC_BASE_ADDR_HIGH, high);
+		low  = input_address;
 		pdp_rdma_reg_write(D_SRC_BASE_ADDR_LOW, low);
 		pdp_rdma_reg_write(D_SRC_LINE_STRIDE,
 				pdp_surface->src_data.line_stride);
@@ -462,10 +461,8 @@ processor_pdp_program(struct dla_processor_group *group)
 				pdp_surface->src_data.surf_stride);
 	}
 
-	high = HIGH32BITS(output_address);
-	low = LOW32BITS(output_address);
+	low = output_address;
 	pdp_reg_write(D_DST_BASE_ADDR_LOW, low);
-	pdp_reg_write(D_DST_BASE_ADDR_HIGH, high);
 
 	pdp_reg_write(D_DST_LINE_STRIDE, pdp_surface->dst_data.line_stride);
 	pdp_reg_write(D_DST_SURFACE_STRIDE, pdp_surface->dst_data.surf_stride);

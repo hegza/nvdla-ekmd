@@ -27,6 +27,7 @@
  */
 
 #include <stdint.h>
+#include <stddef.h>
 
 #include <opendla.h>
 #include <dla_debug.h>
@@ -65,7 +66,7 @@ void
 dla_rubik_stat_data(struct dla_processor *processor,
 					struct dla_processor_group *group)
 {
-	uint64_t end_time = 0;
+	size_t end_time = 0;
 	struct dla_rubik_stat_desc *rubik_stat;
 
 	rubik_stat = &processor->stat_data_desc->rubik_stat;
@@ -134,9 +135,9 @@ static int32_t
 processor_rubik_program(struct dla_processor_group *group)
 {
 	int32_t ret = 0;
-	uint32_t reg, high, low;
-	uint64_t input_address = 0;
-	uint64_t output_address = 0;
+	uint32_t reg, low;
+	size_t input_address = 0;
+	size_t output_address = 0;
 	struct dla_engine *engine = dla_get_engine();
 	struct dla_rubik_op_desc *rubik_op;
 	struct dla_rubik_surface_desc *rubik_surface;
@@ -186,10 +187,8 @@ processor_rubik_program(struct dla_processor_group *group)
 			SHIFT(RBK_D_DATAIN_SIZE_1_0, DATAIN_CHANNEL));
 	rubik_reg_write(D_DATAIN_SIZE_1, reg);
 
-	high = HIGH32BITS(input_address);
-	low = LOW32BITS(input_address);
+	low = input_address;
 	rubik_reg_write(D_DAIN_ADDR_LOW, low);
-	rubik_reg_write(D_DAIN_ADDR_HIGH, high);
 	if (rubik_op->mode == RUBIK_MODE_MERGE) {
 		ASSERT_GOTO((rubik_surface->src_data.plane_stride != 0),
 			ret, ERR(INVALID_INPUT), exit);
@@ -211,10 +210,8 @@ processor_rubik_program(struct dla_processor_group *group)
 			SHIFT(RBK_D_DATAOUT_SIZE_1_0, DATAOUT_CHANNEL));
 	rubik_reg_write(D_DATAOUT_SIZE_1, reg);
 
-	high = HIGH32BITS(output_address);
-	low = LOW32BITS(output_address);
+	low = output_address;
 	rubik_reg_write(D_DAOUT_ADDR_LOW, low);
-	rubik_reg_write(D_DAOUT_ADDR_HIGH, high);
 
 	rubik_reg_write(D_DAOUT_LINE_STRIDE,
 			rubik_surface->dst_data.line_stride);

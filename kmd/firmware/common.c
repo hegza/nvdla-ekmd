@@ -93,7 +93,7 @@ void update_lut(uint32_t reg_base, struct dla_lut_param *lut,
 {
 	int32_t i;
 	uint32_t reg;
-	uint32_t high, low;
+	uint32_t low;
 	int32_t is_sdp = reg_base == SDP_S_LUT_ACCESS_CFG_0;
 	struct dla_engine *engine = dla_get_engine();
 
@@ -153,37 +153,21 @@ void update_lut(uint32_t reg_base, struct dla_lut_param *lut,
 	}
 	dla_reg_write(engine->driver_context,
 			reg_base + lut_info_offset[is_sdp], reg);
-	high = HIGH32BITS(lut->linear_exp_start);
-	low = LOW32BITS(lut->linear_exp_start);
+	low = lut->linear_exp_start;
 	dla_reg_write(engine->driver_context,
 			reg_base + le_start_offset[is_sdp], low);
-	if (!is_sdp)
-		dla_reg_write(engine->driver_context,
-				reg_base + le_start_offset[is_sdp] + 4, high);
 
-	high = HIGH32BITS(lut->linear_exp_end);
-	low = LOW32BITS(lut->linear_exp_end);
+	low = lut->linear_exp_end;
 	dla_reg_write(engine->driver_context,
 				reg_base + le_end_offset[is_sdp], low);
-	if (!is_sdp)
-		dla_reg_write(engine->driver_context,
-				reg_base + le_end_offset[is_sdp] + 4, high);
 
-	high = HIGH32BITS(lut->linear_only_start);
-	low = LOW32BITS(lut->linear_only_start);
+	low = lut->linear_only_start;
 	dla_reg_write(engine->driver_context,
 				reg_base + lo_start_offset[is_sdp], low);
-	if (!is_sdp)
-		dla_reg_write(engine->driver_context,
-				reg_base + lo_start_offset[is_sdp] + 4, high);
 
-	high = HIGH32BITS(lut->linear_only_end);
-	low = LOW32BITS(lut->linear_only_end);
+	low = lut->linear_only_end;
 	dla_reg_write(engine->driver_context,
 				reg_base + lo_end_offset[is_sdp], low);
-	if (!is_sdp)
-		dla_reg_write(engine->driver_context,
-				reg_base + lo_end_offset[is_sdp] + 4, high);
 
 	if (precision == PRECISION_FP16) {
 		reg = (lut->linear_exp_underflow_slope.data_f <<

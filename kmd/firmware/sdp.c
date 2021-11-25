@@ -27,6 +27,7 @@
  */
 
 #include <stdint.h>
+#include <stddef.h>
 
 #include <opendla.h>
 #include <dla_debug.h>
@@ -152,7 +153,7 @@ void
 dla_sdp_stat_data(struct dla_processor *processor,
 					struct dla_processor_group *group)
 {
-	uint64_t end_time = 0;
+	size_t end_time = 0;
 	struct dla_sdp_stat_desc *sdp_stat;
 
 	sdp_stat = &processor->stat_data_desc->sdp_stat;
@@ -260,9 +261,9 @@ static int32_t
 processor_sdp_program(struct dla_processor_group *group)
 {
 	int32_t ret = 0;
-	uint64_t src_addr = -1, x1_addr = -1, x2_addr = -1;
-	uint64_t  y_addr = -1, dst_addr = -1;
-	uint32_t reg, high, low;
+	size_t src_addr = -1, x1_addr = -1, x2_addr = -1;
+	size_t  y_addr = -1, dst_addr = -1;
+	uint32_t reg, low;
 	uint8_t fly;
 	uint32_t atom_size;
 	struct dla_sdp_op *x1_op;
@@ -392,10 +393,8 @@ processor_sdp_program(struct dla_processor_group *group)
 			 * if not on-the-fly, we have to config
 			 * the source cube info
 			 */
-			high = HIGH32BITS(src_addr);
-			low = LOW32BITS(src_addr);
+			low = src_addr;
 			sdp_rdma_reg_write(D_SRC_BASE_ADDR_LOW, low);
-			sdp_rdma_reg_write(D_SRC_BASE_ADDR_HIGH, high);
 			sdp_rdma_reg_write(D_SRC_LINE_STRIDE,
 					sdp_surface->src_data.line_stride);
 			sdp_rdma_reg_write(D_SRC_SURFACE_STRIDE,
@@ -423,12 +422,9 @@ processor_sdp_program(struct dla_processor_group *group)
 		sdp_rdma_reg_write(D_BRDMA_CFG, reg);
 
 		if (x1_rdma_ena) {
-			high = HIGH32BITS(x1_addr);
-			low = LOW32BITS(x1_addr);
+			low = x1_addr;
 			sdp_rdma_reg_write(D_BS_BASE_ADDR_LOW,
 					low);
-			sdp_rdma_reg_write(D_BS_BASE_ADDR_HIGH,
-					high);
 			sdp_rdma_reg_write(D_BS_LINE_STRIDE,
 					sdp_surface->x1_data.line_stride);
 			sdp_rdma_reg_write(D_BS_SURFACE_STRIDE,
@@ -455,12 +451,9 @@ processor_sdp_program(struct dla_processor_group *group)
 		sdp_rdma_reg_write(D_NRDMA_CFG, reg);
 
 		if (x2_rdma_ena) {
-			high = HIGH32BITS(x2_addr);
-			low = LOW32BITS(x2_addr);
+			low = x2_addr;
 			sdp_rdma_reg_write(D_BN_BASE_ADDR_LOW,
 					low);
-			sdp_rdma_reg_write(D_BN_BASE_ADDR_HIGH,
-					high);
 			sdp_rdma_reg_write(D_BN_LINE_STRIDE,
 					sdp_surface->x2_data.line_stride);
 			sdp_rdma_reg_write(D_BN_SURFACE_STRIDE,
@@ -486,12 +479,9 @@ processor_sdp_program(struct dla_processor_group *group)
 
 		sdp_rdma_reg_write(D_ERDMA_CFG, reg);
 		if (y_rdma_ena) {
-			high = HIGH32BITS(y_addr);
-			low = LOW32BITS(y_addr);
+			low = y_addr;
 			sdp_rdma_reg_write(D_EW_BASE_ADDR_LOW,
 					low);
-			sdp_rdma_reg_write(D_EW_BASE_ADDR_HIGH,
-					high);
 			sdp_rdma_reg_write(D_EW_LINE_STRIDE,
 					sdp_surface->y_data.line_stride);
 			sdp_rdma_reg_write(D_EW_SURFACE_STRIDE,
@@ -508,10 +498,7 @@ processor_sdp_program(struct dla_processor_group *group)
 	sdp_reg_write(D_DATA_CUBE_CHANNEL, sdp_surface->src_data.channel - 1);
 
 	if (out_dma_ena) {
-		high = HIGH32BITS(dst_addr);
-		low = LOW32BITS(dst_addr);
-		sdp_reg_write(D_DST_BASE_ADDR_HIGH,
-				high);
+		low = dst_addr;
 		sdp_reg_write(D_DST_BASE_ADDR_LOW,
 				low);
 		sdp_reg_write(D_DST_LINE_STRIDE,

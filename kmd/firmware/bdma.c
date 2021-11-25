@@ -133,7 +133,7 @@ processor_bdma_program_slot(struct dla_bdma_surface_desc *bdma_surface,
 	int32_t ret = 0;
 	uint64_t source_addr = 0;
 	uint64_t destination_addr = 0;
-	uint32_t high, low, reg;
+	uint32_t low, reg;
 	uint8_t  bdma_free_slots = 0;
 	struct dla_engine *engine = dla_get_engine();
 
@@ -176,14 +176,10 @@ processor_bdma_program_slot(struct dla_bdma_surface_desc *bdma_surface,
 				ret, ERR(INVALID_INPUT), exit);
 
 	/* config registers */
-	high = HIGH32BITS(source_addr);
-	low = LOW32BITS(source_addr);
+	low = source_addr;
 	bdma_reg_write(CFG_SRC_ADDR_LOW, low);
-	bdma_reg_write(CFG_SRC_ADDR_HIGH, high);
-	high = HIGH32BITS(destination_addr);
-	low = LOW32BITS(destination_addr);
+	low = destination_addr;
 	bdma_reg_write(CFG_DST_ADDR_LOW, low);
-	bdma_reg_write(CFG_DST_ADDR_HIGH, high);
 	bdma_reg_write(CFG_LINE, (transfer->line_size >> 5) - 1);
 	reg = (map_mem[bdma_surface->source_type] <<
 				SHIFT(BDMA_CFG_CMD_0, SRC_RAM_TYPE)) |

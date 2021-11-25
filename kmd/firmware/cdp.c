@@ -27,6 +27,7 @@
  */
 
 #include <stdint.h>
+#include <stddef.h>
 
 #include <opendla.h>
 #include <dla_debug.h>
@@ -63,7 +64,7 @@ void
 dla_cdp_stat_data(struct dla_processor *processor,
 					struct dla_processor_group *group)
 {
-	uint64_t end_time = 0;
+	size_t end_time = 0;
 	struct dla_cdp_stat_desc *cdp_stat;
 
 	cdp_stat = &processor->stat_data_desc->cdp_stat;
@@ -152,9 +153,9 @@ static int32_t
 processor_cdp_program(struct dla_processor_group *group)
 {
 	int32_t ret = 0;
-	uint32_t reg, high, low;
-	uint64_t input_address = 0;
-	uint64_t output_address = 0;
+	uint32_t reg, low;
+	size_t input_address = 0;
+	size_t output_address = 0;
 	struct dla_lut_param lut;
 	struct dla_engine *engine = dla_get_engine();
 	struct dla_cdp_op_desc *cdp_op;
@@ -217,10 +218,8 @@ processor_cdp_program(struct dla_processor_group *group)
 		<< SHIFT(CDP_RDMA_D_DATA_CUBE_CHANNEL_0, CHANNEL));
 	cdp_rdma_reg_write(D_DATA_CUBE_CHANNEL, reg);
 
-	high = HIGH32BITS(input_address);
-	low = LOW32BITS(input_address);
+	low = input_address;
 	cdp_rdma_reg_write(D_SRC_BASE_ADDR_LOW, low);
-	cdp_rdma_reg_write(D_SRC_BASE_ADDR_HIGH, high);
 
 	cdp_rdma_reg_write(D_SRC_LINE_STRIDE,
 			cdp_surface->src_data.line_stride);
@@ -239,10 +238,8 @@ processor_cdp_program(struct dla_processor_group *group)
 	if (cdp_op->lut_index >= 0)
 		update_lut(CDP_S_LUT_ACCESS_CFG_0, &lut, cdp_op->in_precision);
 
-	high = HIGH32BITS(output_address);
-	low = LOW32BITS(output_address);
+	low = output_address;
 	cdp_reg_write(D_DST_BASE_ADDR_LOW, low);
-	cdp_reg_write(D_DST_BASE_ADDR_HIGH, high);
 
 	cdp_reg_write(D_DST_LINE_STRIDE, cdp_surface->dst_data.line_stride);
 	cdp_reg_write(D_DST_SURFACE_STRIDE, cdp_surface->dst_data.surf_stride);

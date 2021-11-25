@@ -27,6 +27,7 @@
  */
 
 #include <stdint.h>
+#include <stddef.h>
 
 #include <opendla.h>
 #include <dla_debug.h>
@@ -151,7 +152,7 @@ void
 dla_conv_stat_data(struct dla_processor *processor,
 					struct dla_processor_group *group)
 {
-	uint64_t end_time = 0;
+	size_t end_time = 0;
 	struct dla_conv_stat_desc *conv_stat;
 
 	conv_stat = &processor->stat_data_desc->conv_stat;
@@ -253,13 +254,13 @@ static int32_t
 processor_conv_program(struct dla_processor_group *group)
 {
 	int32_t ret = 0;
-	uint32_t reg, high, low, shift, mask;
+	uint32_t reg, low, shift, mask;
 	uint32_t stride_x, stride_y, pad_x, pad_y;
-	uint64_t weight_address = 0;
-	uint64_t wmb_address = 0;
-	uint64_t wgs_address = 0;
-	uint64_t input_address = 0;
-	uint64_t output_address = 0;
+	size_t weight_address = 0;
+	size_t wmb_address = 0;
+	size_t wgs_address = 0;
+	size_t input_address = 0;
+	size_t output_address = 0;
 	uint32_t atom_size = 0;
 	bool weight_compress_support = false;
 	struct dla_engine *engine = dla_get_engine();
@@ -401,7 +402,7 @@ processor_conv_program(struct dla_processor_group *group)
 		<< SHIFT(CACC_D_DATAOUT_SIZE_1_0, DATAOUT_CHANNEL));
 	cacc_reg_write(D_DATAOUT_SIZE_1, reg);
 
-	low = LOW32BITS(output_address);
+	low = output_address;
 	cacc_reg_write(D_DATAOUT_ADDR, low);
 	cacc_reg_write(D_BATCH_NUMBER, conv_op->batch - 1);
 	cacc_reg_write(D_LINE_STRIDE, conv_surface->dst_data.line_stride);
@@ -605,14 +606,10 @@ processor_conv_program(struct dla_processor_group *group)
 		<< SHIFT(CDMA_D_DAIN_RAM_TYPE_0, DATAIN_RAM_TYPE));
 	cdma_reg_write(D_DAIN_RAM_TYPE, reg);
 
-	high = HIGH32BITS(input_address);
-	low = LOW32BITS(input_address);
-	cdma_reg_write(D_DAIN_ADDR_HIGH_0, high);
+	low = input_address;
 	cdma_reg_write(D_DAIN_ADDR_LOW_0, low);
 
-	high = HIGH32BITS((input_address + conv_surface->offset_u));
-	low = LOW32BITS(input_address + conv_surface->offset_u);
-	cdma_reg_write(D_DAIN_ADDR_HIGH_1, high);
+	low = input_address + conv_surface->offset_u;
 	cdma_reg_write(D_DAIN_ADDR_LOW_1, low);
 
 	cdma_reg_write(D_LINE_STRIDE, conv_surface->src_data.line_stride);
@@ -658,21 +655,15 @@ processor_conv_program(struct dla_processor_group *group)
 		<< SHIFT(CDMA_D_WEIGHT_RAM_TYPE_0, WEIGHT_RAM_TYPE));
 	cdma_reg_write(D_WEIGHT_RAM_TYPE, reg);
 
-	high = HIGH32BITS(weight_address);
-	low = LOW32BITS(weight_address);
-	cdma_reg_write(D_WEIGHT_ADDR_HIGH, high);
+	low = weight_address;
 	cdma_reg_write(D_WEIGHT_ADDR_LOW, low);
 	cdma_reg_write(D_WEIGHT_BYTES, conv_surface->weight_data.size);
 
 	if (conv_op->weight_format == WEIGHT_FORMAT_COMPRESSED) {
-		high = HIGH32BITS(wgs_address);
-		low = LOW32BITS(wgs_address);
-		cdma_reg_write(D_WGS_ADDR_HIGH, high);
+		low = wgs_address;
 		cdma_reg_write(D_WGS_ADDR_LOW, low);
 
-		high = HIGH32BITS(wmb_address);
-		low = LOW32BITS(wmb_address);
-		cdma_reg_write(D_WMB_ADDR_HIGH, high);
+		low = wmb_address;
 		cdma_reg_write(D_WMB_ADDR_LOW, low);
 		cdma_reg_write(D_WMB_BYTES, conv_surface->wmb_data.size);
 	}

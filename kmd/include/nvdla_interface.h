@@ -179,8 +179,8 @@ void dla_reg_write(void *driver_context, uint32_t addr, uint32_t reg);
  *
  */
 int32_t dla_data_read(void *driver_context, void *task_data,
-				uint64_t src, void *dst,
-				uint32_t size, uint64_t offset);
+				size_t src, void *dst,
+				uint32_t size, size_t offset);
 
 /**
  * @brief			Write data to DMA mapped memory from local buffer
@@ -204,8 +204,8 @@ int32_t dla_data_read(void *driver_context, void *task_data,
  *
  */
 int32_t dla_data_write(void *driver_context, void *task_data,
-				void *src, uint64_t dst,
-				uint32_t size, uint64_t offset);
+				void *src, size_t dst,
+				uint32_t size, size_t offset);
 
 /* Destination for DMA buffer */
 #define DESTINATION_PROCESSOR	0
@@ -311,7 +311,7 @@ void dla_error(const char *str, ...);
  * @return			Memory area address
  *
  */
-void *dla_memset(void *src, int32_t ch, uint64_t len);
+void *dla_memset(void *src, int32_t ch, size_t len);
 
 /**
  * @brief			Copy memory
@@ -327,6 +327,6 @@ void *dla_memset(void *src, int32_t ch, uint64_t len);
  * @return			Destination memory area address
  *
  */
-void *dla_memcpy(void *dest, const void *src, uint64_t len);
+void *dla_memcpy(void *dest, const void *src, size_t len);
 
 #endif

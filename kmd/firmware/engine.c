@@ -27,6 +27,7 @@
  */
 
 #include <stdint.h>
+#include <stddef.h>
 
 #include <opendla.h>
 #include <dla_debug.h>
@@ -99,7 +100,7 @@ dla_get_dma_cube_address(void *driver_context, void *task_data,
 					uint32_t destination)
 {
 	int32_t ret = 0;
-	uint64_t *pdst = (uint64_t *)dst_ptr;
+	size_t *pdst = (size_t *)dst_ptr;
        ret = dla_get_dma_address(driver_context, task_data, index,
 								dst_ptr, destination);
 	if (ret)
@@ -124,12 +125,12 @@ exit:
  */
 int32_t
 dla_read_input_address(struct dla_data_cube *data,
-		       uint64_t *address,
+		       size_t *address,
 		       int16_t op_index,
 		       uint8_t roi_index,
 		       uint8_t bpp)
 {
-	uint64_t roi_desc_addr;
+	size_t roi_desc_addr;
 	int32_t ret = ERR(INVALID_INPUT);
 	struct dla_engine *en = dla_get_engine();
 

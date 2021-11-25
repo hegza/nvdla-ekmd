@@ -29,33 +29,34 @@
 #ifndef __DLA_SCHED_H_
 #define __DLA_SCHED_H_
 
+#include <stddef.h>
+
 struct dla_task {
 	/* platform specific data to communicate with portability layer */
 	void *task_data;
 	/* task state */
 	uint32_t state;
 	/* Task base address */
-	uint64_t base;
+	size_t base;
 	/* start address of a list of dla_operation_container */
-	uint64_t operation_desc_addr;
+	size_t operation_desc_addr;
 	/* start address of a list of dla_surface_container */
-	uint64_t surface_desc_addr;
+	size_t surface_desc_addr;
 	/* start address of a list of dla_common_op_desc */
-	uint64_t dependency_graph_addr;
+	size_t dependency_graph_addr;
 	/* start address of a list of dla_lut_param */
-	uint64_t lut_data_addr;
+	size_t lut_data_addr;
 	/*
 	 * start address of a list of dla_roi_desc,
 	 * the first one is dla_roi_array_desc
 	 * valid when network.dynamic_roi is true
 	 */
-	uint64_t roi_array_addr;
+	size_t roi_array_addr;
 	/* start address of a list of dla_surface_container */
-	uint64_t surface_addr;
+	size_t surface_addr;
 	/* start address of a list of dla_stat_container */
-	uint64_t stat_data_addr;
+	size_t stat_data_addr;
 } __packed __aligned(256);
-
 /**
  * @brief			Configuration parameters supported by the engine
  *
